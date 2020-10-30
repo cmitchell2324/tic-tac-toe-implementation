@@ -14,6 +14,7 @@ namespace TicTacToe
          * a space is available or already occupied. 
          */
 
+        // 2D char array that generates the playing field
         private static char[,] gameField = new char[,]
         {
             {'1', '2', '3'},
@@ -28,6 +29,7 @@ namespace TicTacToe
             PlayGame();
         }
 
+        // Displays the field to the console 
         public static void DisplayField()
         {
             Console.WriteLine(gameField[0,0] + "\t|\t" + gameField[0,1] + "\t|\t" + gameField[0,2]);
@@ -36,7 +38,7 @@ namespace TicTacToe
             Console.WriteLine("--------|---------------|---------");
             Console.WriteLine(gameField[2,0] + "\t|\t" + gameField[2,1] + "\t|\t" + gameField[2,2]);
         }
-
+        
         public static void PlayGame()
         {
             int player = 2;
@@ -46,9 +48,11 @@ namespace TicTacToe
 
             do
             {
-
+                
+                // Counter variable that increases by one for each turn
                 counter++;
                 
+                // Determines which player is up
                 if (player == 2)
                 {
                     player = 1;
@@ -63,9 +67,11 @@ namespace TicTacToe
 
                 while (true)
                 {
-                    
+                    // Reads in the value that the user entered from the console
                     choice = Console.ReadLine();
                     bool breakOut = true;
+                    
+                    // While loop that will continue to ask the user to enter a valid parseable value
                     while (breakOut)
                     {
                         bool isParseable = IsParseable(choice);
@@ -81,8 +87,12 @@ namespace TicTacToe
                         }
                     }
                     
+                    // If the user enters a value between 1 and 9, the switch statement will start
                     if (input >= 1 && input <= 9)
                     {
+                        // Switch statement that acts very similar for each case. Each input number will call the XorO
+                        // method which checks whether to occupy the space with an X or an O. If the user input an already
+                        // occupied space, it will ask them to input another space
                         switch (player)
                         {
                             case 1:
@@ -249,6 +259,7 @@ namespace TicTacToe
                     Console.WriteLine("Please enter a number between 1-9, try again!");
                 }
 
+                // Method to check if a player has won the game
                 if (CheckWin())
                 {
                     Console.WriteLine("Player {0} has won the game!", player);
@@ -256,6 +267,8 @@ namespace TicTacToe
                     winCheck = false;
                 }
 
+                // This is where the count variable comes into play. If the count is equal to 10, this means that 
+                // 9 turns have gone by and the game has reached a stalemate. 
                 if (counter == 10)
                 {
                     Console.WriteLine("Game is a draw!");
@@ -265,6 +278,7 @@ namespace TicTacToe
             } while (winCheck);
         }
 
+        // Method to check if the user's input is parseable
         public static bool IsParseable(string choice)
         {
             int input;
@@ -276,6 +290,7 @@ namespace TicTacToe
             return false;
         }
 
+        // Method to check if the user has input a proper space or if it is already occupied
         public static bool CheckSpace()
         {
             do
@@ -295,6 +310,7 @@ namespace TicTacToe
             } while (true);
         }
 
+        // Method to change the value of the 2D char array to either an X or O depending on the player
         public static void XOrO(string choice, int player)
         {
             char input;
@@ -318,6 +334,7 @@ namespace TicTacToe
             }
         }
 
+        // Method to check all win statuses.  In this case, it is the diagonals, horizontals, or verticals.
         public static bool CheckWin()
         {
             for (int i = 0; i < 3; i++)
